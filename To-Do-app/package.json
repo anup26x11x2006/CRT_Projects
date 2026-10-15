@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "router-dom": "^3.3.8"
+  }
+}
