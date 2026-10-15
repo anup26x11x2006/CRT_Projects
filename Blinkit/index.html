@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blinkit - Groceries Delivered in Minutes</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #ffffff;
+            color: #1f1f1f;
+        }
+
+        header {
+            height: 86px;
+            display: flex;
+            align-items: center;
+            padding: 0 42px;
+            border-bottom: 1px solid #eeeeee;
+            background: #ffffff;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            gap: 28px;
+        }
+
+        .logo {
+            font-size: 34px;
+            font-weight: 800;
+            color: #f8c900;
+            letter-spacing: -2px;
+            text-shadow: 1px 1px 0 #222;
+        }
+
+        .delivery-box {
+            min-width: 205px;
+        }
+
+        .delivery-title {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .location {
+            font-size: 13px;
+            color: #555;
+        }
+
+        .search-box {
+            height: 48px;
+            flex: 1;
+            max-width: 650px;
+            background: #f5f5f5;
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            padding: 0 17px;
+            margin-left: auto;
+        }
+
+        .search-icon {
+            font-size: 21px;
+            margin-right: 12px;
+            color: #555;
+        }
+
+        .search-box input {
+            width: 100%;
+            border: none;
+            outline: none;
+            background: transparent;
+            font-size: 15px;
+            color: #333;
+        }
+
+        .search-box input::placeholder {
+            color: #777;
+        }
+
+        .login {
+            font-size: 16px;
+            color: #333;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .cart {
+            height: 48px;
+            min-width: 105px;
+            background: #0c831f;
+            color: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .hero {
+            width: 100%;
+            padding: 25px 42px 10px;
+        }
+
+        .hero-banner {
+            height: 300px;
+            width: 100%;
+            border-radius: 15px;
+            overflow: hidden;
+            background: linear-gradient(90deg, #fff7c7, #e9ffd7);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 45px 70px;
+        }
+
+        .hero-content {
+            max-width: 520px;
+        }
+
+        .hero-content h1 {
+            font-size: 42px;
+            line-height: 1.1;
+            margin-bottom: 15px;
+            color: #1c1c1c;
+        }
+
+        .hero-content h1 span {
+            color: #0c831f;
+        }
+
+        .hero-content p {
+            font-size: 17px;
+            color: #555;
+            margin-bottom: 24px;
+        }
+
+        .shop-button {
+            background: #0c831f;
+            color: white;
+            border: none;
+            padding: 13px 25px;
+            border-radius: 7px;
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        .hero-items {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .hero-item {
+            width: 105px;
+            height: 105px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 58px;
+            box-shadow: 0 5px 18px rgba(0, 0, 0, 0.08);
+        }
+
+        .section {
+            padding: 25px 42px 0;
+        }
+
+        .section-heading {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 18px;
+        }
+
+        .section-heading h2 {
+            font-size: 23px;
+            font-weight: 700;
+        }
+
+        .see-all {
+            color: #0c831f;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 15px;
+        }
+
+        .category-card {
+            background: #f8f8f8;
+            border-radius: 10px;
+            padding: 14px 8px;
+            text-align: center;
+            min-height: 125px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            transition: 0.2s;
+        }
+
+        .category-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .category-icon {
+            font-size: 48px;
+            margin-bottom: 9px;
+        }
+
+        .category-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .product-section {
+            padding: 30px 42px 0;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 16px;
+        }
+
+        .product-card {
+            border: 1px solid #e8e8e8;
+            border-radius: 10px;
+            background: white;
+            padding: 10px;
+            min-height: 330px;
+            position: relative;
+            transition: 0.2s;
+            
+        }
+
+        .product-card:hover {
+            box-shadow: 0 5px 18px rgba(0, 0, 0, 0.1);
+            transform: translateY(-3px);
+        }
+
+        .discount {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: #0c831f;
+            color: white;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 4px 7px;
+            border-radius: 4px;
+            z-index: 2;
+        }
+
+        .product-image {
+            height: 170px;
+            background: #f8f8f8;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 88px;
+            margin-bottom: 12px;
+        }
+
+        .time {
+            display: inline-block;
+            background: #f2f2f2;
+            border-radius: 4px;
+            padding: 4px 6px;
+            font-size: 9px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #444;
+        }
+
+        .product-name {
+            font-size: 14px;
+            font-weight: 600;
+            line-height: 1.35;
+            min-height: 38px;
+            margin-bottom: 4px;
+        }
+
+        .product-quantity {
+            font-size: 12px;
+            color: #777;
+            margin-bottom: 12px;
+        }
+
+        .product-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .product-price {
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .old-price {
+            font-size: 11px;
+            color: #999;
+            text-decoration: line-through;
+            margin-left: 4px;
+        }
+
+        .add-button {
+            border: 1px solid #0c831f;
+            background: #f1fff3;
+            color: #0c831f;
+            border-radius: 6px;
+            padding: 7px 18px;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .offers {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .offer {
+            min-height: 150px;
+            border-radius: 12px;
+            padding: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .offer:nth-child(1) {
+            background: #fff2cc;
+        }
+
+        .offer:nth-child(2) {
+            background: #e1f5e5;
+        }
+
+        .offer:nth-child(3) {
+            background: #e3f1ff;
+        }
+
+        .offer h3 {
+            font-size: 19px;
+            margin-bottom: 8px;
+        }
+
+        .offer p {
+            font-size: 13px;
+            color: #555;
+        }
+
+        .offer-icon {
+            font-size: 58px;
+        }
+
+        footer {
+            margin-top: 45px;
+            background: #202020;
+            color: white;
+            padding: 35px 42px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-logo {
+            font-size: 28px;
+            font-weight: 800;
+            color: #f8c900;
+        }
+
+        .footer-text {
+            color: #aaa;
+            font-size: 13px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 25px;
+            font-size: 13px;
+            color: #ccc;
+        }
+
+        @media (max-width: 1200px) {
+            header {
+                padding: 0 25px;
+            }
+
+            .hero,
+            .section,
+            .product-section {
+                padding-left: 25px;
+                padding-right: 25px;
+            }
+
+            .category-grid {
+                grid-template-columns: repeat(5, 1fr);
+            }
+
+            .product-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .hero-items {
+                display: none;
+            }
+        }
+
+        @media (max-width: 800px) {
+            header {
+                height: auto;
+                padding: 15px;
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+
+            .delivery-box {
+                display: none;
+            }
+
+            .logo {
+                font-size: 28px;
+            }
+
+            .search-box {
+                order: 5;
+                flex-basis: 100%;
+                max-width: none;
+                margin: 0;
+            }
+
+            .hero {
+                padding: 15px;
+            }
+
+            .hero-banner {
+                height: 240px;
+                padding: 30px;
+            }
+
+            .hero-content h1 {
+                font-size: 30px;
+            }
+
+            .section,
+            .product-section {
+                padding-left: 15px;
+                padding-right: 15px;
+            }
+
+            .category-grid {
+                grid-template-columns: repeat(5, 1fr);
+                gap: 8px;
+            }
+
+            .category-card {
+                min-height: 100px;
+            }
+
+            .category-icon {
+                font-size: 32px;
+            }
+
+            .category-name {
+                font-size: 11px;
+            }
+
+            .product-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .offers {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .category-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .cart {
+                min-width: 85px;
+                font-size: 13px;
+            }
+
+            .login {
+                font-size: 14px;
+            }
+
+            .hero-content p {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+
+        <div class="logo">blinkit</div>
+
+        <div class="delivery-box">
+            <div class="delivery-title">Delivery in 10 minutes</div>
+            <div class="location">📍 Your Location</div>
+        </div>
+
+        <div class="search-box">
+            <div class="search-icon">⌕</div>
+            <input type="text" placeholder="Search for products, brands and more">
+        </div>
+
+        <div class="login">Login</div>
+
+        <div class="cart">
+            🛒 Cart
+        </div>
+
+    </header>
+
+
+    <section class="hero">
+
+        <div class="hero-banner">
+
+            <div class="hero-content">
+                <h1>Everything you need, <span>delivered fast.</span></h1>
+                <p>Fresh groceries, snacks, beverages and daily essentials at your doorstep.</p>
+                <button class="shop-button">Shop Now</button>
+            </div>
+
+            <div class="hero-items">
+                <div class="hero-item">🥦</div>
+                <div class="hero-item">🍎</div>
+                <div class="hero-item">🥛</div>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <section class="section">
+
+        <div class="section-heading">
+            <h2>Shop by Category</h2>
+            <div class="see-all">See all</div>
+        </div>
+
+        <div class="category-grid">
+
+            <div class="category-card">
+                <div class="category-icon">🥦</div>
+                <div class="category-name">Vegetables</div>
+            </div>
+
+            <div class="category-card">
+                <div class="category-icon">🍎</div>
+                <div class="category-name">Fruits</div>
+            </div>
+
+            <div class="category-card">
+                <div class="category-icon">🥛</div>
+                <div class="category-name">Dairy & Milk</div>
+            </div>
+
+            <div class="category-card">
+                <div class="category-icon">🍞</div>
+                <div class="category-name">Bakery</div>
+            </div>
+
+            <div class="category-card">
+                <div class="category-icon">🍪</div>
+                <div class="category-name">Snacks</div>
+            </div>
+
+            <div class="category-card">
+                <div class="category-icon">🥤</div>
+                <div class="category-name">Cold Drinks</div>
+            </div>
+
+            <div class="category-card">
+                <div class="category-icon">🍚</div>
+                <div class="category-name">Atta & Rice</div>
+            </div>
+
+            <div class="category-card">
+                <div class="category-icon">🧴</div>
+                <div class="category-name">Personal Care</div>
+            </div>
+
+            <div class="category-card">
+                <div class="category-icon">🧹</div>
+                <div class="category-name">Cleaning</div>
+            </div>
+
+            <div class="category-card">
+                <div class="category-icon">🍫</div>
+                <div class="category-name">Chocolates</div>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <section class="product-section">
+
+        <div class="section-heading">
+            <h2>Daily Essentials</h2>
+            <div class="see-all">See all</div>
+        </div>
+
+        <div class="product-grid">
+
+            <div class="product-card">
+                <div class="discount">20% OFF</div>
+                <div class="product-image">🥛</div>
+                <div class="time">⚡ 10 MINS</div>
+                <div class="product-name">Fresh Full Cream Milk</div>
+                <div class="product-quantity">1 litre</div>
+                <div class="product-bottom">
+                    <div class="product-price">₹58 <span class="old-price">₹72</span></div>
+                    <button class="add-button">ADD</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="discount">15% OFF</div>
+                <div class="product-image">🍞</div>
+                <div class="time">⚡ 10 MINS</div>
+                <div class="product-name">Fresh White Bread</div>
+                <div class="product-quantity">400 g</div>
+                <div class="product-bottom">
+                    <div class="product-price">₹40 <span class="old-price">₹48</span></div>
+                    <button class="add-button">ADD</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="discount">10% OFF</div>
+                <div class="product-image">🍎</div>
+                <div class="time">⚡ 10 MINS</div>
+                <div class="product-name">Fresh Red Apples</div>
+                <div class="product-quantity">1 kg</div>
+                <div class="product-bottom">
+                    <div class="product-price">₹139 <span class="old-price">₹155</span></div>
+                    <button class="add-button">ADD</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="discount">25% OFF</div>
+                <div class="product-image">🥔</div>
+                <div class="time">⚡ 10 MINS</div>
+                <div class="product-name">Fresh Potatoes</div>
+                <div class="product-quantity">1 kg</div>
+                <div class="product-bottom">
+                    <div class="product-price">₹35 <span class="old-price">₹47</span></div>
+                    <button class="add-button">ADD</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="discount">18% OFF</div>
+                <div class="product-image">🍪</div>
+                <div class="time">⚡ 10 MINS</div>
+                <div class="product-name">Chocolate Cookies</div>
+                <div class="product-quantity">200 g</div>
+                <div class="product-bottom">
+                    <div class="product-price">₹75 <span class="old-price">₹90</span></div>
+                    <button class="add-button">ADD</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="discount">12% OFF</div>
+                <div class="product-image">🥤</div>
+                <div class="time">⚡ 10 MINS</div>
+                <div class="product-name">Sparkling Soft Drink</div>
+                <div class="product-quantity">750 ml</div>
+                <div class="product-bottom">
+                    <div class="product-price">₹38 <span class="old-price">₹43</span></div>
+                    <button class="add-button">ADD</button>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <section class="product-section">
+
+        <div class="section-heading">
+            <h2>Snacks & Beverages</h2>
+            <div class="see-all">See all</div>
+        </div>
+
+        <div class="product-grid">
+
+            <div class="product-card">
+                <div class="discount">20% OFF</div>
+                <div class="product-image">🍿</div>
+                <div class="time">⚡ 10 MINS</div>
+                <div class="product-name">Classic Salted Popcorn</div>
+                <div class="product-quantity">100 g</div>
+                <div class="product-bottom">
+                    <div class="product-price">₹45 <span class="old-price">₹56</span></div>
+                    <button class="add-button">ADD</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="discount">15% OFF</div>
+                <div class="product-image">🍫</div>
+                <div class="time">⚡ 10 MINS</div>
+                <div class="product-name">Milk Chocolate Bar</div>
+                <div class="product-quantity">50 g</div>
+                <div class="product-bottom">
+                    <div class="product-price">₹40 <span class="old-price">₹48</span></div>
+                    <button class="add-button">ADD</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="discount">10% OFF</div>
+                <div class="product-image">🥜</div>
+                <div class="time">⚡ 10 MINS</div>
+                <div class="product-name">Roasted Peanuts</div>
+                <div class="product-quantity">200 g</div>
+                <div class="product-bottom">
+                    <div class="product-price">₹60 <span class="old-price">₹67</span></div>
+                    <button class="add-button">ADD</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="discount">22% OFF</div>
+                <div class="product-image">🧃</div>
+                <div class="time">⚡ 10 MINS</div>
+                <div class="product-name">Mango Fruit Drink</div>
+                <div class="product-quantity">1 litre</div>
+                <div class="product-bottom">
+                    <div class="product-price">₹85 <span class="old-price">₹109</span></div>
+                    <button class="add-button">ADD</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="discount">18% OFF</div>
+                <div class="product-image">🍟</div>
+                <div class="time">⚡ 10 MINS</div>
+                <div class="product-name">Classic Potato Chips</div>
+                <div class="product-quantity">100 g</div>
+                <div class="product-bottom">
+                    <div class="product-price">₹35 <span class="old-price">₹42</span></div>
+                    <button class="add-button">ADD</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="discount">25% OFF</div>
+                <div class="product-image">🥨</div>
+                <div class="time">⚡ 10 MINS</div>
+                <div class="product-name">Masala Snack Mix</div>
+                <div class="product-quantity">150 g</div>
+                <div class="product-bottom">
+                    <div class="product-price">₹55 <span class="old-price">₹73</span></div>
+                    <button class="add-button">ADD</button>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <section class="section">
+
+        <div class="section-heading">
+            <h2>Special Offers</h2>
+        </div>
+
+        <div class="offers">
+
+            <div class="offer">
+                <div>
+                    <h3>Fresh Fruits</h3>
+                    <p>Up to 30% off on fresh fruits</p>
+                </div>
+                <div class="offer-icon">🍎</div>
+            </div>
+
+            <div class="offer">
+                <div>
+                    <h3>Daily Dairy</h3>
+                    <p>Get your essentials delivered fast</p>
+                </div>
+                <div class="offer-icon">🥛</div>
+            </div>
+
+            <div class="offer">
+                <div>
+                    <h3>Snack Time</h3>
+                    <p>Great deals on your favourites</p>
+                </div>
+                <div class="offer-icon">🍿</div>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <footer>
+
+        <div class="footer-content">
+
+            <div class="footer-logo">blinkit</div>
+
+            <div class="footer-text">
+                Groceries and essentials delivered to your doorstep.
+            </div>
+
+            <div class="footer-links">
+                <span>About</span>
+                <span>Careers</span>
+                <span>Help</span>
+                <span>Privacy</span>
+            </div>
+
+        </div>
+
+    </footer>
+
+</body>
+
+</html>
